@@ -26,8 +26,18 @@ function getLocalDocRoot() {
 
 function copySitePkgInfo(site) {
   const pkg = ksUtils.readData(`${ksUtils.resolveRootPath()}/package.json`);
+  const { devDependencies, ...others } = pick(pkg, ['version', 'private', 'hexo', 'devDependencies']);
 
-  ksUtils.saveData(`${resolveSiteSrcPath(site)}/package.json`, { name: `${pkg.name}-site-${site}`, ...pick(pkg, ['version', 'private', 'hexo', 'dependencies']) });
+  ksUtils.saveData(`${resolveSiteSrcPath(site)}/package.json`, {
+    name: `${pkg.name}-site-${site}`,
+    dependencies: Object.entries(devDependencies).reduce((acc, [key, value]) => {
+      if (key.startsWith('hexo')) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {}),
+    ...others,
+  });
 }
 
 function copyThemeAssets(distRoot, polyfill) {
@@ -78,9 +88,16 @@ function copyThemeAssets(distRoot, polyfill) {
   });
 }
 
+function copyThemeTemplates(distRoot) {
+  const srcRootPath = resolvePath(ksUtils.resolveRootPath(), 'src');
+
+  ksUtils.rm(`${distRoot}/*/_ksio`);
+  ksUtils.copyFileDeeply(srcRootPath, distRoot, ['source']);
+}
+
 module.exports = {
   ...ksUtils,
   resolveSiteSrcDir, resolveSiteSrcPath,
   getLocalDataRoot, getLocalDocRoot,
-  copySitePkgInfo, copyThemeAssets,
+  copySitePkgInfo, copyThemeAssets, copyThemeTemplates,
 };

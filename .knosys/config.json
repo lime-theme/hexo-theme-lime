@@ -1,3 +1,9 @@
 {
-  "command": "./.knosys/scripts/command"
+  "command": "./.knosys/scripts/command",
+  "site": {
+    "default": {
+      "alias": "hexo-demo",
+      "generator": "hexo"
+    }
+  }
 }
