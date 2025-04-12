@@ -1,18 +1,26 @@
 const { resolve: resolvePath } = require('path');
 const { existsSync } = require('fs');
 
-const { resolveRootPath, ensureDirExists, copyFileDeeply, resolveSiteSrcDir } = require('../helper');
+const { resolveRootPath, ensureDirExists, copyFileDeeply, copyThemeAssets, resolveSiteSrcDir } = require('../helper');
 
 module.exports = {
-  execute: (siteAlias = 'default') => {
+  execute: (type = 'bone') => {
+    if (!['bone', 'skin'].includes(type)) {
+      return;
+    }
+
     const rootPath = resolveRootPath();
+    const themeDistPath = resolvePath(rootPath, resolveSiteSrcDir('default'), 'themes/lime');
+
+    if (type === 'skin') {
+      return copyThemeAssets(resolvePath(themeDistPath, 'source'), true);
+    }
+
     const themeSrcPath = `${rootPath}/node_modules/hexo-theme-lime`;
 
     if (!existsSync(themeSrcPath)) {
       return;
     }
-
-    const themeDistPath = resolvePath(rootPath, resolveSiteSrcDir(siteAlias), 'themes/lime-local');
 
     ensureDirExists(themeDistPath);
     copyFileDeeply(themeSrcPath, themeDistPath, ['README.md', 'CHANGELOG.md', 'package.json']);
