@@ -123,7 +123,7 @@ theme_config:
     navbar:
       placement: right
   footer:
-    partial: _local/partials/footer
+    # partial: _local/partials/footer
     links:
       - text: 关于
         url: /about/

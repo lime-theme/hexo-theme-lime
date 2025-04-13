@@ -1,9 +1,19 @@
 {
   "name": "hexo-theme-lime",
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.5",
   "description": "Simple, readable, responsive theme for Hexo",
-  "main": "index.js",
   "private": true,
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lime-theme/hexo-theme-lime.git"
+  },
+  "author": "Ourai L. <ourairyu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lime-theme/hexo-theme-lime/issues"
+  },
+  "homepage": "https://lime-theme.github.io",
   "engines": {
     "node": ">=14.15.3"
   },
@@ -11,6 +21,9 @@
     "version": "6.3.0"
   },
   "dependencies": {
+  },
+  "peerDependencies": {
+    "hexo-front-matter-defaults": "~0.0.0"
   },
   "devDependencies": {
     "@knosys/sdk": "^0.0.3",
@@ -31,7 +44,7 @@
     "build": "node .knosys/scripts generate",
     "clean": "rm -rf .asset-cache .cache .knosys/sites/*/.asset-cache .knosys/sites/*/.cache",
     "start": "node .knosys/scripts serve",
-    "predeploy": "npm run clean",
-    "deploy": "node .knosys/scripts deploy"
+    "prerelease": "npm run clean",
+    "release": "node .knosys/scripts release"
   }
 }
