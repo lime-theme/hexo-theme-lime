@@ -20,13 +20,12 @@
   "hexo": {
     "version": "6.3.0"
   },
-  "dependencies": {
-  },
   "peerDependencies": {
     "hexo-front-matter-defaults": "~0.0.0"
   },
   "devDependencies": {
     "@knosys/sdk": "^0.0.3",
+    "@lime-theme/lime": "0.0.0-alpha.1",
     "@ntks/toolbox": "^0.0.6",
     "dotenv": "^16.4.5",
     "hexo": "^6.3.0",
